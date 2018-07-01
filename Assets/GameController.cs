@@ -5,36 +5,27 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
-	public Text[] spaceList;
 	public GameObject gameOverPanel;
 	public Text gameOverText;
-	public GameObject restartButton;
+	public Text[] spaceList;
+	public GameObject resetButton;
 	private string side;
 	private int moves;
-	// Use this for initialization
+
 	void Start () {
 		
-
 		SetGameControllerReferenceForButtons();
 		side = "X";
 		gameOverPanel.SetActive(false);
 		moves = 0;
-		restartButton.SetActive(false);
+		resetButton.SetActive(false);
 	}
 	
 	void SetGameControllerReferenceForButtons()
 	{
-	for (int i = 0; i < spaceList.Length; i++)
-		spaceList[i].GetComponentInParent<Space>().SetControllerReference(this);
-	}
-
-	// Update is called once per frame
-	void Update () {
-		
-	}
-	public string GetSide()
-	{
-		return side;
+		for (int i = 0; i < spaceList.Length; i++){
+			spaceList[i].GetComponentInParent<Space>().SetControllerReference(this);
+		}
 	}
 
 	void ChangeSide()
@@ -45,52 +36,77 @@ public class GameController : MonoBehaviour {
 		side = "X";
 	}
 
+	public string GetSide()
+	{
+		return side;
+	}
+
 	public void EndTurn()
 	{
         moves++;
+
         if (spaceList[0].text == side && spaceList[1].text == side && spaceList[2].text == side)
+        {
             GameOver();
+        }
         else if (spaceList[3].text == side && spaceList[4].text == side && spaceList[5].text == side)
+        {
             GameOver();
+        }
         else if (spaceList[6].text == side && spaceList[7].text == side && spaceList[8].text == side)
+        {
             GameOver();
+        }
         else if (spaceList[0].text == side && spaceList[3].text == side && spaceList[6].text == side)
+        {
             GameOver();
+        }
         else if (spaceList[1].text == side && spaceList[4].text == side && spaceList[7].text == side)
+        {
             GameOver();
+        }
         else if (spaceList[2].text == side && spaceList[5].text == side && spaceList[8].text == side)
+        {
             GameOver();
+        }
         else if (spaceList[0].text == side && spaceList[4].text == side && spaceList[8].text == side)
+        {
             GameOver();
+        }
         else if (spaceList[2].text == side && spaceList[4].text == side && spaceList[6].text == side)
+        {
             GameOver();
-        if (moves >= 9)
+        }
+        if (moves > 8)
         {
             gameOverPanel.SetActive(true);
-            gameOverText.text = "Tie!";
-            restartButton.SetActive(true);
+            gameOverText.text = "Tie!!!";
+            resetButton.SetActive(true);
         }
         ChangeSide();
 	}
 
 	public void Restart()
 	{
+		moves = 0;
         side = "X";
-        moves = 0;
         gameOverPanel.SetActive(false);
         SetInteractable(true);
-        restartButton.SetActive(false);
-        for (int i = 0; i < spaceList.Length; i++)
+        resetButton.SetActive(false);
+
+        for (int i = 0; i < spaceList.Length; i++){
             spaceList[i].text = "";
+        }
 	}
 
 	void GameOver()
 	{
 	    gameOverPanel.SetActive(true);
 	    gameOverText.text = side + " wins!";
-	    restartButton.SetActive(true);
-	    for (int i = 0; i < spaceList.Length; i++)
+	    resetButton.SetActive(true);
+	    for (int i = 0; i < spaceList.Length; i++){
 	        SetInteractable(false);
+	    }
 	}
 
 	void SetInteractable(bool setting)
@@ -98,4 +114,5 @@ public class GameController : MonoBehaviour {
         for (int i = 0; i < spaceList.Length; i++)
             spaceList[i].GetComponentInParent<Button>().interactable = setting;
 	}
+	
 }

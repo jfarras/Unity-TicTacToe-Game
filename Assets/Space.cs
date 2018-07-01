@@ -5,21 +5,19 @@ using UnityEngine.UI;
 
 public class Space : MonoBehaviour {
 
-	public Button button;
 	public Text buttonText;
 	private GameController gameController;
-	
-	
-	public void SetControllerReference(GameController control)
-	{
-		gameController = control;
-	}
-	
-
+	public Button button;
+		
 	public void SetSpace()
 	{
 		buttonText.text = gameController.GetSide();
 		button.interactable = false;
 		gameController.EndTurn();
+	}
+
+	public void SetControllerReference(GameController control)
+	{
+		gameController = control;
 	}
 }
